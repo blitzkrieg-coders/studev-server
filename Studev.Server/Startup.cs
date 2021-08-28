@@ -4,11 +4,14 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+
+using Studev.Server.Database;
 
 namespace Studev.Server {
     public class Startup {
@@ -44,6 +47,13 @@ namespace Studev.Server {
                         Encoding.UTF8.GetBytes(
                             Configuration.GetValue<string>("Key")))
                 };
+            });
+
+            services.AddDbContext<StudevContext>(options => {
+                if (Environment.IsDevelopment()) {
+                    options.EnableSensitiveDataLogging().EnableDetailedErrors();
+                }
+                options.UseMySql(Configuration.GetConnectionString("StudevDb"), new MySqlServerVersion("5.7.35"));
             });
         }
 
