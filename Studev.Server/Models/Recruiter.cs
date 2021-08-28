@@ -36,6 +36,7 @@ namespace Studev.Server.Models
         /// </summary>
         public virtual List<Student> Candidates { get; set; }
 
+
         public Recruiter() { }
 
     }
