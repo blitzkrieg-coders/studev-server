@@ -50,7 +50,7 @@ namespace Studev.Server.Models
         public string School { get; set; }
 
 
-        public User() { }
+        public Student() { }
 
        
     }
