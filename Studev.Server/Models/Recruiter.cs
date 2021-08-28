@@ -34,7 +34,7 @@ namespace Studev.Server.Models
         /// <summary>
         /// Student candidates marked by the recruiter.
         /// </summary>
-        public virtual List<Student> Candidates { get; set; }
+        public virtual List<Student> Students { get; set; }
 
 
         public Recruiter() { }

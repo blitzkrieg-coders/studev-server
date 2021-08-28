@@ -49,6 +49,11 @@ namespace Studev.Server.Models
         /// </summary>
         public string School { get; set; }
 
+        /// <summary>
+        /// List of recruiters for EF list.
+        /// </summary>
+        public virtual List<Recruiter> Recruiters { get; set; }
+
 
         public Student() { }
 
