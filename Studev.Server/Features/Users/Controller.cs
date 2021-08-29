@@ -35,6 +35,15 @@ namespace Studev.Server.Features.Users {
             return student is null ? NotFound() : Ok(student);
         }
 
+        [HttpGet("details/{gitHubLogin}")]
+        public async Task<ActionResult<Details.StudentData>> GetDetails(string gitHubLogin) {
+            var studentData = await _mediator.Send(new Details.Query {
+                GitHubLogin = gitHubLogin
+            });
+
+            return studentData is null ? NotFound() : Ok(studentData);
+        }
+
         //gets profile of user's github username
         public async Task<JObject> GetProfile(string username)
         {
