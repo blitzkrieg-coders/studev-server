@@ -15,19 +15,19 @@ using Microsoft.IdentityModel.Tokens;
 using Studev.Server.Database;
 
 namespace Studev.Server.Features.Users {
-    public class Get {
-        public record StudentDto {
+    public class LogIn {
+        public record StudentSession {
             public int GitHubId { get; init; }
             public string GitHubLogin { get; init; }
             public string Email { get; init; }
             public string Token { get; set; }
         }
 
-        public record Query : IRequest<StudentDto> {
+        public record Query : IRequest<StudentSession> {
             public int GitHubId { get; init; }
         }
 
-        public class Handler : IRequestHandler<Query, StudentDto> {
+        public class Handler : IRequestHandler<Query, StudentSession> {
             private readonly IConfiguration _configuration;
             private readonly StudevContext _context;
 
@@ -36,10 +36,10 @@ namespace Studev.Server.Features.Users {
                 _context = context;
             }
 
-            public async Task<StudentDto> Handle(Query request, CancellationToken cancellationToken) {
+            public async Task<StudentSession> Handle(Query request, CancellationToken cancellationToken) {
                 var studentDto = await _context.Students
                     .Where(s => s.GitHubId == request.GitHubId)
-                    .Select(s => new StudentDto {
+                    .Select(s => new StudentSession {
                         GitHubId = s.GitHubId,
                         GitHubLogin = s.GitHubLogin,
                         Email = s.Email
