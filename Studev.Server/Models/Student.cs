@@ -49,6 +49,8 @@ namespace Studev.Server.Models
         /// </summary>
         public string School { get; set; }
 
+        public DateTime RegistrationDate { get; set; }
+
         /// <summary>
         /// List of recruiters for EF list.
         /// </summary>

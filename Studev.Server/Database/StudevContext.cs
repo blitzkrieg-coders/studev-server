@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 using Microsoft.EntityFrameworkCore;
 
 using Studev.Server.Models;
@@ -13,6 +15,8 @@ namespace Studev.Server.Database {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Student>(student => {
                 student.ToTable(nameof(Student));
+                student.Property(s => s.RegistrationDate)
+                    .HasDefaultValue(DateTime.Now);
             });
 
             modelBuilder.Entity<Recruiter>(recruiter => {
