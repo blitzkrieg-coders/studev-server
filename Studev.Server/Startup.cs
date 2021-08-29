@@ -19,8 +19,6 @@ using Studev.Server.Services;
 
 namespace Studev.Server {
     public class Startup {
-
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
 
@@ -31,16 +29,12 @@ namespace Studev.Server {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("http://localhost:",
-                                                          "https://api.github.com/");
-                                  });
+            services.AddCors(options => {
+                options.AddDefaultPolicy(builder => {
+                    builder.AllowAnyOrigin();
+                });
             });
+
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Studev.Server", Version = "v1" });
@@ -87,7 +81,7 @@ namespace Studev.Server {
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
