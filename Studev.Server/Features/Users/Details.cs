@@ -76,11 +76,16 @@ namespace Studev.Server.Features.Users {
                 var repos = await _apiService.GetArray(user["repos_url"].ToString());
                 var studentRepos = new List<StudentData.RepositoryStats>();
                 foreach (var repo in repos.Where(r => !(bool)r["fork"])) {
+                    var language = repo["language"].ToString();
+                    if (language == "") {
+                        continue;
+                    }
+
                     var contributors = await _apiService.GetArray(repo["contributors_url"].ToString());
                     var contributor = contributors
                         .FirstOrDefault(c => c["login"].ToString() == request.GitHubLogin);
                     studentRepos.Add(new StudentData.RepositoryStats {
-                        Language = repo["language"].ToString(),
+                        Language = language,
                         Commits = (int)contributor["contributions"]
                     });
                 }
