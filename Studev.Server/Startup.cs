@@ -14,6 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using Studev.Server.Database;
+using Studev.Server.Services;
+
 
 namespace Studev.Server {
     public class Startup {
@@ -28,6 +30,8 @@ namespace Studev.Server {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
+            services.AddHttpClient();
+            services.AddSingleton<ApiRequest>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Studev.Server", Version = "v1" });
             });
