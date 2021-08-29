@@ -30,8 +30,7 @@ namespace Studev.Server {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
-            services.AddHttpClient();
-            services.AddSingleton<ApiRequest>();
+            services.AddHttpClient<ApiService>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Studev.Server", Version = "v1" });
             });

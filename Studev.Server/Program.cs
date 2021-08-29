@@ -8,12 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Studev.Server {
-    public class Program {
-        public static void Main(string[] args) {
-
+namespace Studev.Server
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
             CreateHostBuilder(args).Build().Run();
-            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -21,6 +22,5 @@ namespace Studev.Server {
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder.UseStartup<Startup>();
                 });
-        
     }
 }

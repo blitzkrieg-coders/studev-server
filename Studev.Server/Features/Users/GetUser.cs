@@ -9,7 +9,7 @@ namespace Studev.Server.Features.Users
 {
     public class GetUser
     {
-        private ApiRequest apirequest;
+        private ApiService apirequest;
 
         /// <summary>
         /// Returns an array with specified user data
