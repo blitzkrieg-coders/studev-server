@@ -23,9 +23,8 @@ namespace Studev.Server.Features.Users {
 
             public async Task<int> Handle(Command request, CancellationToken cancellationToken) {
                 var student = new Student {
-                    GithubLogin = request.GitHubLogin,
+                    GitHubLogin = request.GitHubLogin,
                     Email = request.Email,
-                    Password = request.HashedPassword
                 };
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync(cancellationToken);
