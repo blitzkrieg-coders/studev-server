@@ -40,7 +40,7 @@ namespace Studev.Server.Features.Users {
             }
 
             public async Task<StudentData> Handle(Query request, CancellationToken cancellationToken) {
-                var repos = await _apiService.GetArray($"{request.GitHubLogin}/repos?type=owner");
+                var repos = await _apiService.GetArray($"users/{request.GitHubLogin}/repos?type=owner");
 
                 var studentData = await _context.Students
                     .Where(s => s.GitHubLogin == request.GitHubLogin)
