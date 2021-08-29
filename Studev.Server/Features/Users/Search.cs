@@ -50,7 +50,9 @@ namespace Studev.Server.Features.Users {
                         .SingleOrDefault();
                 }
 
-                return students.Where(s => s.RepositoriesAmount > 0);
+                return students
+                    .Where(s => s.RepositoriesAmount > 0)
+                    .OrderByDescending(s => s.RepositoriesAmount);
             }
         }
     }
