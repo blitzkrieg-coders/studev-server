@@ -30,12 +30,9 @@ namespace Studev.Server {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
-            services.AddHttpClient<ApiService>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Studev.Server", Version = "v1" });
             });
-
-            services.AddMediatR(typeof(Startup));
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,6 +59,9 @@ namespace Studev.Server {
                 }
                 options.UseMySql(Configuration.GetConnectionString("StudevDb"), new MySqlServerVersion("5.7.35"));
             });
+
+            services.AddHttpClient<ApiService>();
+            services.AddMediatR(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
