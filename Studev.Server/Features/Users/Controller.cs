@@ -18,9 +18,18 @@ namespace Studev.Server.Features.Users {
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("auth/signup")]
         public async Task<ActionResult<int>> SignUp([FromBody] Add.Command request) {
             return Ok(await _mediator.Send(request));
+        }
+
+        [HttpPost("auth/login")]
+        public async Task<ActionResult<Get.StudentDto>> LogIn(int gitHubId) {
+            var student = await _mediator.Send(new Get.Query {
+                GitHubId = gitHubId
+            });
+
+            return student is null ? NotFound() : Ok(student);
         }
     }
 }

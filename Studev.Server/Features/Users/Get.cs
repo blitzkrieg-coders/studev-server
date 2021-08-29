@@ -16,18 +16,18 @@ using Studev.Server.Database;
 
 namespace Studev.Server.Features.Users {
     public class Get {
-        public record Response {
+        public record StudentDto {
             public int GitHubId { get; init; }
             public string GitHubLogin { get; init; }
             public string Email { get; init; }
             public string Token { get; set; }
         }
 
-        public record Query : IRequest<Response> {
+        public record Query : IRequest<StudentDto> {
             public int GitHubId { get; init; }
         }
 
-        public class Handler : IRequestHandler<Query, Response> {
+        public class Handler : IRequestHandler<Query, StudentDto> {
             private readonly IConfiguration _configuration;
             private readonly StudevContext _context;
 
@@ -36,15 +36,19 @@ namespace Studev.Server.Features.Users {
                 _context = context;
             }
 
-            public async Task<Response> Handle(Query request, CancellationToken cancellationToken) {
+            public async Task<StudentDto> Handle(Query request, CancellationToken cancellationToken) {
                 var studentDto = await _context.Students
                     .Where(s => s.GitHubId == request.GitHubId)
-                    .Select(s => new Response {
+                    .Select(s => new StudentDto {
                         GitHubId = s.GitHubId,
                         GitHubLogin = s.GitHubLogin,
                         Email = s.Email
                     })
                     .SingleOrDefaultAsync(cancellationToken);
+
+                if (studentDto is null) {
+                    return null;
+                }
 
                 studentDto.Token = new JwtSecurityTokenHandler()
                     .WriteToken(new JwtSecurityToken(
