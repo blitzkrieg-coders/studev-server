@@ -8,9 +8,7 @@ using Studev.Server.Models;
 
 namespace Studev.Server.Features.Users {
     public class Add {
-        public record Command : IRequest<int> {
-            public Student Student { get; init; }
-        }
+        public class Command : Student, IRequest<int> { }
 
         public class Handler : IRequestHandler<Command, int> {
             private readonly StudevContext _context;
@@ -20,10 +18,10 @@ namespace Studev.Server.Features.Users {
             }
 
             public async Task<int> Handle(Command request, CancellationToken cancellationToken) {
-                request.Student.Id = 0;
-                _context.Students.Add(request.Student);
+                request.Id = 0;
+                _context.Students.Add(request);
                 await _context.SaveChangesAsync(cancellationToken);
-                return request.Student.Id;
+                return request.Id;
             }
         }
     }
