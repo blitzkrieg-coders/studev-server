@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json.Linq;
@@ -13,16 +14,17 @@ namespace Studev.Server.Services {
         {
             client.BaseAddress = new Uri("https://api.github.com/");
             // GitHub requires a user-agent
-            client.DefaultRequestHeaders.Add("StudevServer", "v1");
+            client.DefaultRequestHeaders.UserAgent
+                .Add(new ProductInfoHeaderValue("Studev", "0.0.0"));
 
             Client = client;
         }
 
         public async Task<JArray> GetArray(string url)
         {
-                var response = await Client.GetAsync($"{Client.BaseAddress}{url}");
-                var content = await response.Content.ReadAsStringAsync();
-                return JArray.Parse(content);
+            var response = await Client.GetAsync($"{Client.BaseAddress}{url}");
+            var content = await response.Content.ReadAsStringAsync();
+            return JArray.Parse(content);
         }
 
         public async Task<JObject> GetObject(string url)
@@ -34,8 +36,8 @@ namespace Studev.Server.Services {
 
         public async Task<string> GetContent(string url)
         {
-                var response = await Client.GetAsync($"{Client.BaseAddress}{url}");
-                return await response.Content.ReadAsStringAsync();
+            var response = await Client.GetAsync($"{Client.BaseAddress}{url}");
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }
