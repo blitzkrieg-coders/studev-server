@@ -51,18 +51,14 @@ namespace Studev.Server.Features.Users {
             }
 
             public async Task<StudentData> Handle(Query request, CancellationToken cancellationToken) {
-                var user = await _apiService.GetObject($"https://api.github.com/users/{request.GitHubLogin}");
-                if (user is null) {
-                    return null;
-                }
                 var studentData = await _context.Students
                     .Where(s => s.GitHubLogin == request.GitHubLogin)
                     .Select(s => new StudentData {
                         GitHubLogin = s.GitHubLogin,
-                        Name = user["name"].ToString(),
-                        AvatarUrl = user["avatar_url"].ToString(),
-                        Biography = user["bio"].ToString(),
-                        Location = user["location"].ToString(),
+                        Name = s.Name,
+                        AvatarUrl = s.AvatarUrl,
+                        Biography = s.Biography,
+                        Location = s.Location,
                         StudyStart = s.StudyStart,
                         StudyEnd = s.StudyEnd,
                         Career = s.Career,
@@ -73,7 +69,7 @@ namespace Studev.Server.Features.Users {
                     return null;
                 }
 
-                var repos = await _apiService.GetArray(user["repos_url"].ToString());
+                var repos = await _apiService.GetArray($"https://api.github.com/users/{request.GitHubLogin}/repos");
                 var studentRepos = new List<StudentData.RepositoryStats>();
                 foreach (var repo in repos.Where(r => !(bool)r["fork"])) {
                     var language = repo["language"].ToString();
