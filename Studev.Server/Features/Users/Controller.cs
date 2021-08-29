@@ -24,8 +24,8 @@ namespace Studev.Server.Features.Users {
         }
 
         [HttpPost("auth/login")]
-        public async Task<ActionResult<Get.StudentDto>> LogIn(int gitHubId) {
-            var student = await _mediator.Send(new Get.Query {
+        public async Task<ActionResult<LogIn.StudentSession>> LogIn(int gitHubId) {
+            var student = await _mediator.Send(new LogIn.Query {
                 GitHubId = gitHubId
             });
 
@@ -42,7 +42,7 @@ namespace Studev.Server.Features.Users {
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Search.StudentDto>>> SearchBy([FromQuery] string language) {
+        public async Task<ActionResult<IEnumerable<Search.StudentMatch>>> SearchBy([FromQuery] string language) {
             var students = await _mediator.Send(new Search.Query {
                 Language = language
             });
