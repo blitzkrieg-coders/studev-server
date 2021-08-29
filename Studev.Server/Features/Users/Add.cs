@@ -9,9 +9,7 @@ using Studev.Server.Models;
 namespace Studev.Server.Features.Users {
     public class Add {
         public record Command : IRequest<int> {
-            public string GitHubLogin { get; init; }
-            public string Email { get; init; }
-            public string HashedPassword { get; init; }
+            public Student Student { get; init; }
         }
 
         public class Handler : IRequestHandler<Command, int> {
@@ -22,13 +20,10 @@ namespace Studev.Server.Features.Users {
             }
 
             public async Task<int> Handle(Command request, CancellationToken cancellationToken) {
-                var student = new Student {
-                    GitHubLogin = request.GitHubLogin,
-                    Email = request.Email,
-                };
-                _context.Students.Add(student);
+                request.Student.Id = 0;
+                _context.Students.Add(request.Student);
                 await _context.SaveChangesAsync(cancellationToken);
-                return student.Id;
+                return request.Student.Id;
             }
         }
     }
