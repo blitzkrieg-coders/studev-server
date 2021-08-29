@@ -24,6 +24,14 @@ namespace Studev.Server.Models
         /// </summary>
         public string GitHubLogin { get; set; }
 
+        public string AvatarUrl { get; set; }
+
+        public string Name { get; set; }
+
+        public string Biography { get; set; }
+
+        public string Location { get; set; }
+
         /// <summary>
         /// Student's email.
         /// </summary>
