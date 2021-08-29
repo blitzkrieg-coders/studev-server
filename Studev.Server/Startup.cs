@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using Studev.Server.Database;
+using Studev.Server.Services;
+
 
 namespace Studev.Server {
     public class Startup {
@@ -27,6 +29,7 @@ namespace Studev.Server {
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
             services.AddHttpClient();
+            services.AddSingleton<ApiRequest>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Studev.Server", Version = "v1" });
             });
