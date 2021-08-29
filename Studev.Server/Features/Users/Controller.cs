@@ -19,6 +19,7 @@ namespace Studev.Server.Features.Users {
 
         public Controller(IMediator mediator) {
             _mediator = mediator;
+
         }
 
         [HttpPost("auth/signup")]
