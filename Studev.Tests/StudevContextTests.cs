@@ -33,10 +33,10 @@ namespace Studev.Tests {
                 Name = "Reclutador",
                 Students = new List<Student> {
                     new Student {
-                        GithubLogin = "username"
+                        GitHubLogin = "username"
                     },
                     new Student {
-                        GithubLogin = "octocat"
+                        GitHubLogin = "octocat"
                     }
                 }
             };
@@ -45,7 +45,7 @@ namespace Studev.Tests {
             await context.SaveChangesAsync();
 
             var actualStudent = await context.Students
-                .Where(s => s.GithubLogin == "username")
+                .Where(s => s.GitHubLogin == "username")
                 .FirstOrDefaultAsync();
             Assert.Equal("Reclutador", actualStudent.Recruiters[0].Name);
         }

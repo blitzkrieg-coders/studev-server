@@ -15,19 +15,19 @@ namespace Studev.Server.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// Id retrieved from GitHub API
+        /// </summary>
+        public int GitHubId { get; set; }
+
+        /// <summary>
         /// Student's Github username
         /// </summary>
-        public string GithubLogin { get; set; }
+        public string GitHubLogin { get; set; }
 
         /// <summary>
         /// Student's email.
         /// </summary>
         public string Email { get; set; }
-
-        /// <summary>
-        /// Hashed password.
-        /// </summary>
-        public string Password { get; set; }
 
         /// <summary>
         /// Datetime object representing the start of the Student´s career
