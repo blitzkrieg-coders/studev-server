@@ -35,8 +35,9 @@ namespace Studev.Server.Features.Users {
             public async Task<IEnumerable<StudentMatch>> Handle(Query request, CancellationToken cancellationToken) {
                 var students = await _context.Students
                     .Select(s => new StudentMatch {
-                        GitHubLogin = s.GitHubLogin
-                        //, Name = s.Name
+                        GitHubLogin = s.GitHubLogin,
+                        Name = s.Name,
+                        AvatarUrl = s.AvatarUrl
                     })
                     .ToArrayAsync(cancellationToken);
 
