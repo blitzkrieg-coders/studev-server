@@ -12,18 +12,18 @@ using Studev.Server.Services;
 
 namespace Studev.Server.Features.Users {
     public class Search {
-        public record StudentDto {
+        public record StudentMatch {
             public string GitHubLogin { get; init; }
             public string Name { get; init; }
             public string AvatarUrl { get; init; }
             public int RepositoriesAmount { get; set; }
         }
 
-        public record Query : IRequest<IEnumerable<StudentDto>> {
+        public record Query : IRequest<IEnumerable<StudentMatch>> {
             public string Language { get; init; }
         }
 
-        public class Handler : IRequestHandler<Query, IEnumerable<StudentDto>> {
+        public class Handler : IRequestHandler<Query, IEnumerable<StudentMatch>> {
             private readonly StudevContext _context;
             private readonly ApiService _apiService;
 
@@ -32,9 +32,9 @@ namespace Studev.Server.Features.Users {
                 _apiService = apiService;
             }
 
-            public async Task<IEnumerable<StudentDto>> Handle(Query request, CancellationToken cancellationToken) {
+            public async Task<IEnumerable<StudentMatch>> Handle(Query request, CancellationToken cancellationToken) {
                 var students = await _context.Students
-                    .Select(s => new StudentDto {
+                    .Select(s => new StudentMatch {
                         GitHubLogin = s.GitHubLogin
                         //, Name = s.Name
                     })
